@@ -26,9 +26,46 @@ export default class Game extends Phaser.Scene
     {
         this.add.image(500, 400, 'background');
 
+        this.bricks = this.physics.add.staticGroup();
+
+        for(let i = 1; i < 100; ++i)
+        {
+            const x = i * 60;
+            
+            if( x <= 950)
+            {
+                const brick = this.bricks.create(x, 30, 'brick').setScale(0.3);
+                brick.body.updateFromGameObject();
+            }
+            else if( x >= 950 && x <= 1850)
+            {
+                const x = ( i - 15 ) * 60 
+                const brick = this.bricks.create(x, 60, 'brick').setScale(0.3);
+                brick.body.updateFromGameObject();
+            }
+            else if( x >= 1850 && x <= 2750)
+            {
+                const x = ( i - 30 ) * 60 
+                const brick = this.bricks.create(x, 90, 'brick').setScale(0.3);
+                brick.body.updateFromGameObject();
+            }
+            else if( x >= 2750 && x <= 3650)
+            {
+                const x = ( i - 45 ) * 60 
+                const brick = this.bricks.create(x, 120, 'brick').setScale(0.3);
+                brick.body.updateFromGameObject();
+            }
+            else if( x >= 3650 && x <= 4550)
+            {
+                const x = ( i - 60 ) * 60 
+                const brick = this.bricks.create(x, 150, 'brick').setScale(0.3);
+                brick.body.updateFromGameObject();
+            }
+        }
+
         //const ground = this.physics.add.staticImage(500, 800, 'ground');
 
-        this.paddle = this.physics.add.image(500, 770, 'paddle').setScale(0.15);
+        this.paddle = this.physics.add.image(500, 570, 'paddle').setScale(0.15);
         this.paddle.setCollideWorldBounds(true);
 
         //this.physics.add.collider(this.paddle, ground);
@@ -43,6 +80,10 @@ export default class Game extends Phaser.Scene
         else if(this.cursors.right.isDown)
         {
             this.paddle.setVelocityX(200);
+        }
+        else
+        {
+            this.paddle.setVelocityX(0);
         }
     }
 }
