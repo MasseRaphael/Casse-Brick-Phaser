@@ -6,10 +6,16 @@ export default class Game extends Phaser.Scene
     cursors;
     bricks;
     ball;
+    score;
 
     constructor()
     {
         super('game')
+    }
+
+    init()
+    {
+        this.score = 0;
     }
 
     preload()
@@ -18,7 +24,6 @@ export default class Game extends Phaser.Scene
         this.load.image('brick', 'assets/tileRed_26.png');
         this.load.image('ball', 'assets/ballYellow_06.png');
         this.load.image('paddle', 'assets/paddle_02.png');
-        //this.load.image('ground', 'assets/ground.png');
 
         this.cursors = this.input.keyboard.createCursorKeys();
     }
@@ -29,7 +34,7 @@ export default class Game extends Phaser.Scene
 
         this.bricks = this.physics.add.staticGroup();
 
-        for(let i = 1; i < 100; ++i)
+        for(let i = 1; i < 76; ++i)
         {
             const x = i * 60;
             
@@ -64,8 +69,6 @@ export default class Game extends Phaser.Scene
             }
         }
 
-        //const ground = this.physics.add.staticImage(500, 600, 'ground');
-
         this.paddle = this.physics.add.image(500, 570, 'paddle').setScale(0.15);
         this.paddle.setCollideWorldBounds(true);
 
@@ -76,8 +79,6 @@ export default class Game extends Phaser.Scene
 
         this.physics.add.collider(this.ball, this.paddle);
 
-        //this.physics.add.collider(this.paddle, ground);
-
         this.physics.add.collider(
             this.ball,
             this.bricks,
@@ -86,6 +87,8 @@ export default class Game extends Phaser.Scene
             this
             );
 
+        const style = { fontSize: 32, color: '#000'};
+        this.scoreText = this.add.text(400, 300, 'Score: 0', style);
     }
 
     update()
@@ -94,26 +97,35 @@ export default class Game extends Phaser.Scene
 
         if(touchingDown)
         {
-            this.ball.setVelocityY(-500)
+            this.ball.setVelocity(Phaser.Math.Between(-200, 200), -500)
         }
 
         if(this.cursors.left.isDown)
         {
-            this.paddle.setVelocityX(-200);
+            this.paddle.setVelocityX(-300);
         }
         else if(this.cursors.right.isDown)
         {
-            this.paddle.setVelocityX(200);
+            this.paddle.setVelocityX(300);
         }
         else
         {
             this.paddle.setVelocityX(0);
+        }
+
+        if(this.ball.y > 592)
+        {
+            this.scene.start('game-over', {score: this.score});
         }
     }
 
     hitBrick(ball, brick)
     {
         brick.destroy();
-    }
 
+        this.score += 10;
+
+        const value = `Score: ${this.score}`;
+        this.scoreText.text = value;
+    }
 }
