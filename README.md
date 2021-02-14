@@ -8,8 +8,8 @@ avec des variantes de briques, peut être un ajout de bonus drop par les briques
 
 ## Ajout Futur
 
-⋅⋅* Menu Start
-⋅⋅* Niveaux Suplémentaires
-⋅⋅* Variation de briques avec des différentes solidité
-⋅⋅* Tableau des scores
-⋅⋅* Des Bonus ?
+* Menu Start
+* Niveaux Suplémentaires
+* Variation de briques avec des différentes solidité
+* Tableau des scores
+* Des Bonus ?
