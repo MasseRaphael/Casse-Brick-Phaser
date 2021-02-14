@@ -18,7 +18,7 @@ export default class Game extends Phaser.Scene
         this.load.image('brick', 'assets/tileRed_26.png');
         this.load.image('ball', 'assets/ballYellow_06.png');
         this.load.image('paddle', 'assets/paddle_02.png');
-        this.load.image('ground', 'assets/ground.png');
+        //this.load.image('ground', 'assets/ground.png');
 
         this.cursors = this.input.keyboard.createCursorKeys();
     }
@@ -64,7 +64,7 @@ export default class Game extends Phaser.Scene
             }
         }
 
-        const ground = this.physics.add.staticImage(500, 600, 'ground');
+        //const ground = this.physics.add.staticImage(500, 600, 'ground');
 
         this.paddle = this.physics.add.image(500, 570, 'paddle').setScale(0.15);
         this.paddle.setCollideWorldBounds(true);
@@ -76,9 +76,16 @@ export default class Game extends Phaser.Scene
 
         this.physics.add.collider(this.ball, this.paddle);
 
-        this.physics.add.collider(this.paddle, ground);
+        //this.physics.add.collider(this.paddle, ground);
 
-        this.physics.add.collider(this.ball, this.bricks);
+        this.physics.add.collider(
+            this.ball,
+            this.bricks,
+            this.hitBrick,
+            undefined,
+            this
+            );
+
     }
 
     update()
@@ -103,4 +110,10 @@ export default class Game extends Phaser.Scene
             this.paddle.setVelocityX(0);
         }
     }
+
+    hitBrick(ball, brick)
+    {
+        brick.destroy();
+    }
+
 }
