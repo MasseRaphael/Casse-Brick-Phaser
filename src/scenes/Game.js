@@ -5,6 +5,7 @@ export default class Game extends Phaser.Scene
     paddle;
     cursors;
     bricks;
+    ball;
 
     constructor()
     {
@@ -63,16 +64,32 @@ export default class Game extends Phaser.Scene
             }
         }
 
-        //const ground = this.physics.add.staticImage(500, 800, 'ground');
+        const ground = this.physics.add.staticImage(500, 600, 'ground');
 
         this.paddle = this.physics.add.image(500, 570, 'paddle').setScale(0.15);
         this.paddle.setCollideWorldBounds(true);
 
-        //this.physics.add.collider(this.paddle, ground);
+        this.ball = this.physics.add.image(500, 300, 'ball').setScale(0.1);
+        this.ball.setBounce(1);
+        this.ball.setCollideWorldBounds(true);
+        this.ball.setVelocity(Phaser.Math.Between(-200, 200), 20)
+
+        this.physics.add.collider(this.ball, this.paddle);
+
+        this.physics.add.collider(this.paddle, ground);
+
+        this.physics.add.collider(this.ball, this.bricks);
     }
 
     update()
     {
+        const touchingDown = this.ball.body.touching.down;
+
+        if(touchingDown)
+        {
+            this.ball.setVelocityY(-500)
+        }
+
         if(this.cursors.left.isDown)
         {
             this.paddle.setVelocityX(-200);
