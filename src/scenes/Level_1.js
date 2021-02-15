@@ -1,7 +1,8 @@
 import Phaser from '../lib/phaser.js';
 
-export default class Game extends Phaser.Scene
+export default class Level_1 extends Phaser.Scene
 {
+    //Déclaration des variables utiliséé
     paddle;
     cursors;
     bricks;
@@ -10,14 +11,16 @@ export default class Game extends Phaser.Scene
 
     constructor()
     {
-        super('game')
+        super('level_1')
     }
 
+    //initialisation du score
     init()
     {
         this.score = 0;
     }
 
+    //préchargement des images utilisées pour le niveau
     preload()
     {
         this.load.image('background', 'assets/bg_layer1.png');
@@ -28,10 +31,12 @@ export default class Game extends Phaser.Scene
         this.cursors = this.input.keyboard.createCursorKeys();
     }
 
+    //Génération du niveau
     create()
     {
         this.add.image(500, 400, 'background');
 
+        //génération du mur de briques---------------------
         this.bricks = this.physics.add.staticGroup();
 
         for(let i = 1; i < 76; ++i)
@@ -68,15 +73,22 @@ export default class Game extends Phaser.Scene
                 brick.body.updateFromGameObject();
             }
         }
+        //-------------------------------------------------
 
+        //génération de la raquette------------------------
         this.paddle = this.physics.add.image(500, 570, 'paddle').setScale(0.15);
+        //permet d'empêcher la raquette de sortir de l'écran
         this.paddle.setCollideWorldBounds(true);
+        //-------------------------------------------------
 
+        //génération de la balle---------------------------
         this.ball = this.physics.add.image(500, 300, 'ball').setScale(0.1);
         this.ball.setBounce(1);
+        //permet d'empêcher la balle de sortir de l'écran
         this.ball.setCollideWorldBounds(true);
-        this.ball.setVelocity(Phaser.Math.Between(-200, 200), 20)
+        //-------------------------------------------------
 
+        //paramétrage des collisons------------------------
         this.physics.add.collider(this.ball, this.paddle);
 
         this.physics.add.collider(
@@ -86,20 +98,26 @@ export default class Game extends Phaser.Scene
             undefined,
             this
             );
+        //-------------------------------------------------
 
         const style = { fontSize: 32, color: '#000'};
         this.scoreText = this.add.text(400, 300, 'Score: 0', style);
     }
 
+    //Eléments mis à jour selon certaines conditions
     update()
     {
+        //paramétrage du rebond de la balle----------------
         const touchingDown = this.ball.body.touching.down;
 
         if(touchingDown)
         {
+            //paramétrage du rebond avec un paramètre aléatoire sur l'axe x pour éviter le soft-bloc avec un vélocité sur x égale à 0
             this.ball.setVelocity(Phaser.Math.Between(-200, 200), -500)
         }
+        //-------------------------------------------------
 
+        //paramétrage du movement de la raquette-----------
         if(this.cursors.left.isDown)
         {
             this.paddle.setVelocityX(-300);
@@ -112,13 +130,17 @@ export default class Game extends Phaser.Scene
         {
             this.paddle.setVelocityX(0);
         }
+        //-------------------------------------------------
 
+        //paramétrage du Game Over-------------------------
         if(this.ball.y > 592)
         {
             this.scene.start('game-over', {score: this.score});
         }
+        //-------------------------------------------------
     }
 
+    //Fonction d'impact de la balle contre les briques permettant de détruire et ajouter des points au score
     hitBrick(ball, brick)
     {
         brick.destroy();
