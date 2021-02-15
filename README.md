@@ -11,7 +11,7 @@ C'est un casse brique qui est voué à évoluer avec  de nouveaux niveau seront 
 Daté du 15/02/2021
 
 * Niveaux Suplémentaires
-* Variation de briques avec des différentes solidité
+* Variation de briques avec différentes solidité
 * Tableau des scores
 * Des Bonus ?
 * Equilibrage
