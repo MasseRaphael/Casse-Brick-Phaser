@@ -8,6 +8,8 @@ avec des variantes de briques, peut être un ajout de bonus drop par les briques
 
 ## Ajouts Futur
 
+Daté du 14/02/2021
+
 * Menu Start
 * Niveaux Suplémentaires
 * Variation de briques avec des différentes solidité
