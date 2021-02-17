@@ -112,7 +112,7 @@ export default class Level_1 extends Phaser.Scene
 
         if(touchingDown)
         {
-            //paramétrage du rebond avec un paramètre aléatoire sur l'axe x pour éviter le soft-bloc avec un vélocité sur x égale à 0
+            //paramétrage du rebond avec un paramètre aléatoire sur l'axe x pour éviter le soft-block avec un vélocité sur x égale à 0
             this.ball.setVelocity(Phaser.Math.Between(-200, 200), -500)
         }
         //-------------------------------------------------
