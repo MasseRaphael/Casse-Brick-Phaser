@@ -18,7 +18,7 @@ export default class Level_2 extends Phaser.Scene
     //initialisation du score
     init(data)
     {
-        this.tempoScore = data.score;
+        this.tempoScore = 0//data.score;
     }
 
     //préchargement des images utilisées pour le niveau
@@ -165,18 +165,18 @@ export default class Level_2 extends Phaser.Scene
 
     hitBlueBrick(ball, brick)
     {
-        for (let i=0; i < 3; ++i){
-            var life = 2;
-            life --;        
-        }
+        let life = 2;
 
-        console.log(life);
+        for (let i = 0; i < 2; ++i){
+            life --;
+        }
 
         if (life === 1){
     
             brick.setTexture('brick3');
 
-        }else if (life === 0){
+        }
+        if (life === 0){
 
             console.log(life);
             brick.destroy();
