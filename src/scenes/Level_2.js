@@ -5,7 +5,8 @@ export default class Level_2 extends Phaser.Scene
     //Déclaration des variables utiliséé
     paddle;
     cursors;
-    bricks;
+    redBricks;
+    blueBricks;
     ball;
     score;
     brickLife;
@@ -40,7 +41,8 @@ export default class Level_2 extends Phaser.Scene
         this.add.image(500, 400, 'background');
 
         //génération du mur de briques---------------------
-        this.bricks = this.physics.add.staticGroup();
+        this.redBricks = this.physics.add.staticGroup();
+        this.blueBricks = this.physics.add.staticGroup();
 
         for(let i = 1; i < 76; ++i)
         {
@@ -48,31 +50,31 @@ export default class Level_2 extends Phaser.Scene
             
             if( x <= 950)
             {
-                const brick = this.bricks.create(x, 30, 'brick1').setScale(0.3);
+                const brick = this.redBricks.create(x, 30, 'brick1').setScale(0.3);
                 brick.body.updateFromGameObject();
             }
             else if( x >= 950 && x <= 1850)
             {
                 const x = ( i - 15 ) * 60 
-                const brick = this.bricks.create(x, 60, 'brick1').setScale(0.3);
+                const brick = this.redBricks.create(x, 60, 'brick1').setScale(0.3);
                 brick.body.updateFromGameObject();
             }
             else if( x >= 1850 && x <= 2750)
             {
                 const x = ( i - 30 ) * 60 
-                const brick = this.bricks.create(x, 90, 'brick1').setScale(0.3);
+                const brick = this.redBricks.create(x, 90, 'brick1').setScale(0.3);
                 brick.body.updateFromGameObject();
             }
             else if( x >= 2750 && x <= 3650)
             {
                 const x = ( i - 45 ) * 60 
-                const brick = this.bricks.create(x, 120, 'brick1').setScale(0.3);
+                const brick = this.redBricks.create(x, 120, 'brick1').setScale(0.3);
                 brick.body.updateFromGameObject();
             }
             else if( x >= 3650 && x <= 4550)
             {
                 const x = ( i - 60 ) * 60 
-                const brick = this.bricks.create(x, 150, 'brick1').setScale(0.3);
+                const brick = this.blueBricks.create(x, 150, 'brick2').setScale(0.3);
                 brick.body.updateFromGameObject();
             }
         }
@@ -96,11 +98,19 @@ export default class Level_2 extends Phaser.Scene
 
         this.physics.add.collider(
             this.ball,
-            this.bricks,
-            this.hitBrick,
+            this.redBricks,
+            this.hitRedBrick,
             undefined,
             this
-            );
+        );
+
+        this.physics.add.collider(
+            this.ball,
+            this.blueBricks,
+            this.hitBlueBrick,
+            undefined,
+            this
+        );
         //-------------------------------------------------
 
         const style = { fontSize: 32, color: '#000'};
@@ -144,11 +154,33 @@ export default class Level_2 extends Phaser.Scene
     }
 
     //Fonction d'impact de la balle contre les briques permettant de détruire et ajouter des points au score
-    hitBrick(ball, brick)
+    hitRedBrick(ball, brick)
     {
         brick.destroy();
 
         this.score += 10;
+
+        const value = `Score: ${this.score}`;
+        this.scoreText.text = value;
+    }
+
+    hitBlueBrick(ball, brick)
+    {
+        hit = 0;
+
+        if (hit == 0){
+
+            hit += 1;
+            brick.setTexture('brick3');
+
+        }
+        else if (hit == 1){
+
+            brick.destroy();
+
+            this.score += 10;
+
+        }
 
         const value = `Score: ${this.score}`;
         this.scoreText.text = value;
