@@ -9,7 +9,6 @@ export default class Level_2 extends Phaser.Scene
     blueBricks;
     ball;
     score;
-    brickLife;
 
     constructor()
     {
@@ -166,21 +165,25 @@ export default class Level_2 extends Phaser.Scene
 
     hitBlueBrick(ball, brick)
     {
-        hit = 0;
+        for (let i=0; i < 3; ++i){
+            var life = 2;
+            life --;        
+        }
 
-        if (hit == 0){
+        console.log(life);
 
-            hit += 1;
+        if (life === 1){
+    
             brick.setTexture('brick3');
 
-        }
-        else if (hit == 1){
+        }else if (life === 0){
 
+            console.log(life);
             brick.destroy();
-
+    
             this.score += 10;
-
         }
+        
 
         const value = `Score: ${this.score}`;
         this.scoreText.text = value;
