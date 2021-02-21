@@ -8,10 +8,14 @@ C'est un casse brique qui est voué à évoluer avec  de nouveaux niveau seront 
 
 ## Ajouts Futur
 
-Daté du 15/02/2021
+Daté du 21/02/2021
 
-* Niveaux Suplémentaires
-* Variation de briques avec différentes solidité
+* Niveaux Suplémentaires (en cours)
+* Variation de briques avec différentes solidité (en cours)
 * Tableau des scores
 * Des Bonus ?
 * Equilibrage
+
+## A modifier
+
+faire en sorte que les briques soit des classes pour améliorer la qualité du code
