@@ -7,6 +7,7 @@ export default class Level_2 extends Phaser.Scene
     cursors;
     redBricks;
     blueBricks;
+    halfBlueBrick;
     ball;
     score;
 
@@ -61,7 +62,7 @@ export default class Level_2 extends Phaser.Scene
             else if( x >= 1850 && x <= 2750)
             {
                 const x = ( i - 30 ) * 60 
-                const brick = this.redBricks.create(x, 90, 'brick1').setScale(0.3);
+                const brick = this.blueBricks.create(x, 90, 'brick1').setScale(0.3);
                 brick.body.updateFromGameObject();
             }
             else if( x >= 2750 && x <= 3650)
@@ -73,7 +74,7 @@ export default class Level_2 extends Phaser.Scene
             else if( x >= 3650 && x <= 4550)
             {
                 const x = ( i - 60 ) * 60 
-                const brick = this.blueBricks.create(x, 150, 'brick2').setScale(0.3);
+                const brick = this.redBricks.create(x, 150, 'brick1').setScale(0.3);
                 brick.body.updateFromGameObject();
             }
         }
@@ -98,7 +99,7 @@ export default class Level_2 extends Phaser.Scene
         this.physics.add.collider(
             this.ball,
             this.redBricks,
-            this.hitRedBrick,
+            this.hitBrick,
             undefined,
             this
         );
@@ -153,7 +154,7 @@ export default class Level_2 extends Phaser.Scene
     }
 
     //Fonction d'impact de la balle contre les briques permettant de détruire et ajouter des points au score
-    hitRedBrick(ball, brick)
+    hitBrick(ball, brick)
     {
         brick.destroy();
 
@@ -165,27 +166,18 @@ export default class Level_2 extends Phaser.Scene
 
     hitBlueBrick(ball, brick)
     {
-        let life = 2;
+        const x = brick.x;
+        const y = brick.y;
 
-        for (let i = 0; i < 2; ++i){
-            life --;
-        }
-
-        if (life === 1){
-    
-            brick.setTexture('brick3');
-
-        }
-        if (life === 0){
-
-            console.log(life);
-            brick.destroy();
-    
-            this.tempoScore += 10;
-        }
-        
-
-        const value = `Score: ${this.tempoScore}`;
-        this.scoreText.text = value;
+        brick.destroy();
+        this.halfBlueBrick = this.physics.add.staticImage(x, y, 'brick3').setScale(0.3);
+        this.halfBlueBrick.body.updateFromGameObject();
+        this.physics.add.collider(
+            this.ball,
+            this.halfBlueBrick,
+            this.hitBrick,
+            undefined,
+            this
+        );
     }
 }
