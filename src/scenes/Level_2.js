@@ -12,13 +12,13 @@ export default class Level_2 extends Phaser.Scene
 
     constructor()
     {
-        super('level_1')
+        super('level_2')
     }
 
     //initialisation du score
-    init()
+    init(data)
     {
-        this.score = 0;
+        this.tempoScore = data.score;
     }
 
     //préchargement des images utilisées pour le niveau
@@ -147,7 +147,7 @@ export default class Level_2 extends Phaser.Scene
         //paramétrage du Game Over-------------------------
         if(this.ball.y > 592)
         {
-            this.scene.start('game-over', {score: this.score});
+            this.scene.start('game-over', {score: this.tempoScore});
         }
         //-------------------------------------------------
     }
@@ -157,9 +157,9 @@ export default class Level_2 extends Phaser.Scene
     {
         brick.destroy();
 
-        this.score += 10;
+        this.tempoScore += 10;
 
-        const value = `Score: ${this.score}`;
+        const value = `Score: ${this.tempoScore}`;
         this.scoreText.text = value;
     }
 
@@ -181,11 +181,11 @@ export default class Level_2 extends Phaser.Scene
             console.log(life);
             brick.destroy();
     
-            this.score += 10;
+            this.tempoScore += 10;
         }
         
 
-        const value = `Score: ${this.score}`;
+        const value = `Score: ${this.tempoScore}`;
         this.scoreText.text = value;
     }
 }

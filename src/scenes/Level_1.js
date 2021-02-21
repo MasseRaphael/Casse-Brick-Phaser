@@ -138,6 +138,11 @@ export default class Level_1 extends Phaser.Scene
             this.scene.start('game-over', {score: this.score});
         }
         //-------------------------------------------------
+
+        if(this.bricks.countActive(true) === 0){
+
+            this.scene.start('level_2', {score: this.score});
+        }
     }
 
     //Fonction d'impact de la balle contre les briques permettant de détruire et ajouter des points au score
