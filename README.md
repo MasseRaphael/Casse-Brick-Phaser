@@ -22,4 +22,4 @@ faire en sorte que les briques soit des classes pour améliorer la qualité du c
 
 ## Demo
 
-https://casse-brique-phaser.vercel.app/
+Sur [Vercel](https://casse-brique-phaser.vercel.app/)
